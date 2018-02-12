@@ -4,7 +4,8 @@ const DEFAULT_STATE = {
     randomNumber: null,
     userGuess: '',
     numberOfGuesses: 0,
-    message: ''
+    message: '',
+    history: []
 }
 
 export default function(state=DEFAULT_STATE, action){
@@ -19,10 +20,15 @@ export default function(state=DEFAULT_STATE, action){
             if(state.randomNumber > state.userGuess){
                 message = 'TOO LOW';
             } else if(state.randomNumber < state.userGuess){
-                message = 'tooooo high';
+                message = 'toooo high';
             }
 
-            return {...state, userGuess: '', message, numberOfGuesses: state.numberOfGuesses + 1};
+            let historyData = {
+                guess: state.userGuess,
+                result: message
+            }
+
+            return {...state, userGuess: '', message, numberOfGuesses: state.numberOfGuesses + 1, history: [historyData, ...state.history]};
         default:
             return state;
     }
